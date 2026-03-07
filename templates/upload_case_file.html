@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Case File - Legal Assistant</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2f4050;
+            --primary-dark: #283848;
+            --accent: #3b82f6;
+            --accent-dark: #2563eb;
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --light: #f9fafc;
+            --gray-light: #eaeaea;
+            --gray: #d1d5db;
+            --text: #333;
+            --text-light: #6b7280;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .upload-container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .upload-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .upload-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .upload-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .upload-header h2 {
+            color: var(--primary);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .upload-header i {
+            color: var(--accent);
+            font-size: 28px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .form-control, .form-select {
+            padding: 12px 15px;
+            border: 1px solid var(--gray);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .file-drop-area {
+            border: 2px dashed var(--gray);
+            border-radius: 10px;
+            padding: 40px 20px;
+            text-align: center;
+            background: var(--light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .file-drop-area:hover {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .file-drop-area.dragover {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .file-drop-area i {
+            font-size: 42px;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .file-drop-area p {
+            margin-bottom: 5px;
+            color: var(--text);
+        }
+
+        .file-drop-area .small {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .file-info {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            display: none;
+        }
+
+        .file-info h6 {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: none;
+            background: var(--gray-light);
+        }
+
+        .progress-bar {
+            background: linear-gradient(45deg, var(--accent), var(--accent-dark));
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--accent), var(--accent-dark));
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-outline-secondary {
+            border: 1px solid var(--gray);
+            color: var(--text);
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .btn-outline-secondary:hover {
+            background: var(--light);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .upload-container {
+                margin: 20px auto;
+                padding: 15px;
+            }
+            
+            .upload-card {
+                padding: 1.5rem;
+            }
+            
+            .file-drop-area {
+                padding: 30px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container upload-container">
+        <div class="upload-card">
+            <div class="upload-header">
+                <h2>
+                    <i class="fas fa-file-upload"></i>
+                    Upload Case File
+                </h2>
+            </div>
+            
+            <form id="fileUploadForm">
+                <div class="mb-4">
+                    <label for="fileName" class="form-label">File Name/Description</label>
+                    <input type="text" class="form-control" id="fileName" placeholder="Enter a name for this file" required>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="fileCategory" class="form-label">File Category</label>
+                    <select class="form-select" id="fileCategory" required>
+                        <option value="">Select category</option>
+                        <option value="case_document">Case Document</option>
+                        <option value="evidence">Evidence</option>
+                        <option value="legal_document">Legal Document</option>
+                        <option value="correspondence">Correspondence</option>
+                        <option value="court_order">Court Order</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="form-label">Upload File</label>
+                    <div class="file-drop-area" id="fileDropArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p class="mb-2">Drag & drop your file here</p>
+                        <p class="text-muted small">or click to browse</p>
+                        <input type="file" id="fileInput" hidden accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt,.xls,.xlsx">
+                    </div>
+                </div>
+                
+                <div class="file-info" id="fileInfo">
+                    <h6>File Information:</h6>
+                    <p id="fileDetails"></p>
+                </div>
+                
+                <div class="progress" id="uploadProgress">
+                    <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                </div>
+                
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg" id="uploadBtn">
+                        <i class="fas fa-upload me-2"></i>
+                        Upload File
+                    </button>
+                </div>
+            </form>
+            
+            <div class="back-link">
+                <a href="/dashboard" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>
+                    Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const fileDropArea = document.getElementById('fileDropArea');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileDetails = document.getElementById('fileDetails');
+        const uploadForm = document.getElementById('fileUploadForm');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const progressBar = uploadProgress.querySelector('.progress-bar');
+        const uploadBtn = document.getElementById('uploadBtn');
+        
+        let selectedFile = null;
+        
+        // File drop functionality
+        fileDropArea.addEventListener('click', () => fileInput.click());
+        
+        fileDropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileDropArea.classList.add('dragover');
+        });
+        
+        fileDropArea.addEventListener('dragleave', () => {
+            fileDropArea.classList.remove('dragover');
+        });
+        
+        fileDropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileDropArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+        
+        function handleFileSelect(file) {
+            const maxSize = 10 * 1024 * 1024; // 10MB limit
+            
+            if (file.size > maxSize) {
+                alert('File size too large. Maximum size is 10MB.');
+                return;
+            }
+            
+            selectedFile = file;
+            const size = (file.size / 1024 / 1024).toFixed(2);
+            
+            fileDetails.innerHTML = `
+                <strong>Name:</strong> ${file.name}<br>
+                <strong>Type:</strong> ${file.type || 'Unknown'}<br>
+                <strong>Size:</strong> ${size} MB
+            `;
+            fileInfo.style.display = 'block';
+        }
+        
+        // Form submission
+        uploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!selectedFile) {
+                alert('Please select a file to upload.');
+                return;
+            }
+            
+            const fileName = document.getElementById('fileName').value;
+            const fileCategory = document.getElementById('fileCategory').value;
+            
+            uploadBtn.disabled = true;
+            uploadProgress.style.display = 'block';
+            
+            try {
+                // Simulate upload progress
+                let progress = 0;
+                const progressInterval = setInterval(() => {
+                    progress += 5;
+                    progressBar.style.width = `${progress}%`;
+                    
+                    if (progress >= 100) {
+                        clearInterval(progressInterval);
+                    }
+                }, 100);
+                
+                // Convert file to base64
+                const base64Data = await convertToBase64(selectedFile);
+                
+                const formData = {
+                    file_name: fileName,
+                    original_name: selectedFile.name,
+                    file_type: selectedFile.name.split('.').pop().toLowerCase(),
+                    file_size: selectedFile.size,
+                    mime_type: selectedFile.type,
+                    base64_data: base64Data,
+                    file_category: fileCategory,
+                    description: fileName
+                };
+                
+                const response = await fetch('/api/upload-case-file', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('File uploaded successfully!');
+                    window.location.href = '/dashboard';
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                alert('Upload failed. Please try again.');
+            } finally {
+                uploadBtn.disabled = false;
+                uploadProgress.style.display = 'none';
+                progressBar.style.width = '0%';
+            }
+        });
+        
+        function convertToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+    </script>
+</body>
+</html>

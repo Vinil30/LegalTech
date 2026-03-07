@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soven Legal - Chat</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+</head>
+<body>
+  <div class="chat-container">
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="lawyer-info">
+        <img src="{{ lawyer_profile_pic or url_for('static', filename='images/lawyer.png') }}" class="lawyer-avatar">
+        <div>
+          <h3>{{ lawyer_name or 'Lawyer' }}</h3>
+          <p>Online</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Messages -->
+    <div class="chat-messages" id="chat-messages"></div>
+
+    <!-- Input -->
+    <div class="chat-input">
+      <input type="text" id="message-input" placeholder="Type a message...">
+      <button id="send-btn">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatId = "{{ chat_id }}";  // passed from Flask
+    const sender = "{{ sender }}";   // "user" or "lawyer"
+
+    async function fetchMessages() {
+      const res = await fetch(`/chat/${chatId}`);
+      const chat = await res.json();
+      const messagesDiv = document.getElementById("chat-messages");
+      messagesDiv.innerHTML = "";
+
+      chat.messages.forEach(msg => {
+        const div = document.createElement("div");
+        div.classList.add("message", msg.sender === sender ? "sent" : "received");
+
+        div.innerHTML = `
+          <p>${msg.message}</p>
+          <span class="time">${new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+        `;
+        messagesDiv.appendChild(div);
+      });
+
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById("message-input");
+      const text = input.value.trim();
+      if (!text) return;
+
+      await fetch(`/chat/${chatId}/send`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sender, message: text })
+      });
+
+      input.value = "";
+      fetchMessages();
+    }
+
+    document.getElementById("send-btn").addEventListener("click", sendMessage);
+    document.getElementById("message-input").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") sendMessage();
+    });
+
+    // Poll messages every 2s
+    setInterval(fetchMessages, 2000);
+    fetchMessages();
+  </script>
+</body>
+</html>

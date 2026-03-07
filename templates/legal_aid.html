@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soven Legal - Legal Help</title>
+    <link rel="stylesheet" href="static/css/legal_aid.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-container">
+            <h2 class="logo">Akaash Pandya</h2>
+        </div>
+        <ul>
+            <li><a href="/dashboard"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+            <li><a href="/documents"><i class="fas fa-file-alt"></i> <span>Documents</span></a></li>
+            <li><a href="/hired-lawyers"><i class="fas fa-user-tie"></i> <span>My Lawyers</span></a></li>
+            <li><a href="/lawyers"><i class="fas fa-user-tie"></i> <span>Find Lawyers</span></a></li>
+            <li><a href="/chat-interface"><i class="fas fa-comments"></i> <span>Messages</span></a></li>
+            <li><a href="/legal-aid" class="active"><i class="fas fa-hands-helping"></i> <span>Legal Help</span></a></li>
+            <li><a href="/upload-case-file" class="btn btn-primary"><i class="fas fa-upload"></i> Upload Case File</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <p>&copy; 2023 Soven Legal</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header>
+            <div class="header-left">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1>Legal Help Resources</h1>
+            </div>
+            <div class="user-info">
+                {% if user %}
+                <span>{{ user.name }}</span>
+                <div class="avatar">{{ user.initials }}</div>
+                {% else %}
+                <!-- <a href="/login" class="login-btn">Login</a> -->
+                {% endif %}
+            </div>
+        </header>
+
+        <!-- Introduction Section -->
+        <section class="intro-section">
+            <div class="section-header">
+                <h2>Free Legal Assistance Organizations</h2>
+            </div>
+            <div class="intro-content">
+                <p>Below you'll find a list of non-profit organizations that provide free or low-cost legal assistance. These organizations can help with various legal issues including housing, immigration, family law, and more.</p>
+                <div class="search-filter">
+                    <input type="text" id="searchInput" placeholder="Search organizations or services...">
+                    <select id="serviceFilter">
+                        <option value="">All Services</option>
+                        <option value="Housing">Housing</option>
+                        <option value="Family Law">Family Law</option>
+                        <option value="Immigration">Immigration</option>
+                        <option value="Consumer Rights">Consumer Rights</option>
+                        <option value="Disability Rights">Disability Rights</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Organizations Listing -->
+        <section class="organizations-section">
+            <div class="section-header">
+                <h3>Available Organizations</h3>
+            </div>
+
+            <div class="organizations-list">
+                {% for org in non_profits %}
+                <div class="org-card" data-services="{{ org.services|join(',') }}">
+                    <div class="org-header">
+                        <h4>{{ org.name }}</h4>
+                        <div class="org-tags">
+                            {% for service in org.services %}
+                            <span class="service-tag">{{ service }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="org-body">
+                        <p class="org-description">{{ org.description }}</p>
+                        
+                        <div class="org-details">
+                            <div class="detail-item">
+                                <i class="fas fa-globe-americas"></i>
+                                <span>{{ org.areas_served|join(', ') }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-language"></i>
+                                <span>{{ org.languages|join(', ') }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-user-check"></i>
+                                <span>{{ org.eligibility }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="org-footer">
+                        <div class="contact-info">
+                            {% if org.contact.phone %}
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:{{ org.contact.phone }}">{{ org.contact.phone }}</a>
+                            </div>
+                            {% endif %}
+                            {% if org.contact.email %}
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:{{ org.contact.email }}">{{ org.contact.email }}</a>
+                            </div>
+                            {% endif %}
+                            {% if org.contact.website %}
+                            <div class="contact-item">
+                                <i class="fas fa-external-link-alt"></i>
+                                <a href="{{ org.contact.website }}" target="_blank">Visit Website</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <button class="contact-btn" onclick="window.open('{{ org.contact.website }}', '_blank')">
+                            Contact Now
+                        </button>
+                    </div>
+                </div>
+                {% else %}
+                <div class="no-results">
+                    <i class="fas fa-info-circle"></i>
+                    <p>No organizations found. Please check back later.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Additional Resources Section -->
+        <section class="resources-section">
+            <div class="section-header">
+                <h3>Additional Resources</h3>
+            </div>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <i class="fas fa-book"></i>
+                    <h4>Legal Guides</h4>
+                    <p>Access our comprehensive legal guides for common issues.</p>
+                    <a href="#" class="resource-link">View Guides</a>
+                </div>
+                <div class="resource-card">
+                    <i class="fas fa-question-circle"></i>
+                    <h4>FAQ</h4>
+                    <p>Find answers to frequently asked legal questions.</p>
+                    <a href="#" class="resource-link">View FAQs</a>
+                </div>
+                <div class="resource-card">
+                    <i class="fas fa-gavel"></i>
+                    <h4>Self-Help Tools</h4>
+                    <p>Use our tools to prepare legal documents yourself.</p>
+                    <a href="#" class="resource-link">Explore Tools</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="static/js/legal_aid.js"></script>
+</body>
+</html>

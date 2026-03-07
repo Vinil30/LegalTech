@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Details - Soven Legal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2f4050;
+            --primary-dark: #283848;
+            --accent: #3b82f6;
+            --accent-dark: #2563eb;
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --light: #f9fafc;
+            --gray-light: #eaeaea;
+            --gray: #d1d5db;
+            --text: #333;
+            --text-light: #6b7280;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            background: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            margin-left: 280px;
+            transition: var(--transition);
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .back-btn {
+            background: var(--white);
+            color: var(--primary);
+            border: 1px solid var(--gray);
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-right: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .back-btn:hover {
+            background: var(--light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Case Overview */
+        .case-overview {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .case-overview:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .case-overview h2 {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .overview-stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 150px;
+            transition: var(--transition);
+            flex: 1;
+        }
+
+        .stat:hover {
+            background: #edf2ff;
+            transform: translateY(-3px);
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* Section Styling */
+        section {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        section:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        section h3 {
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        /* Milestones Timeline */
+        .milestones-timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .milestones-timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gray-light);
+        }
+
+        .milestone-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .milestone-icon {
+            position: absolute;
+            left: -30px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .milestone-item.status-completed .milestone-icon {
+            color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .milestone-item.status-in_progress .milestone-icon {
+            color: var(--accent);
+            background: rgba(59, 130, 246, 0.1);
+            animation: pulse 2s infinite;
+        }
+
+        .milestone-item.status-pending .milestone-icon {
+            color: var(--text-light);
+            background: rgba(209, 213, 219, 0.3);
+        }
+
+        .milestone-content {
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .milestone-content h4 {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .milestone-content p {
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .milestone-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .milestone-meta .notes {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .milestone-percentage {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--accent);
+            min-width: 50px;
+            text-align: right;
+        }
+
+ 
+        .verification-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--white);
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .verification-result {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .verification-success {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 15px;
+        }
+
+        .verification-error {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--danger);
+            padding: 15px;
+        }
+
+        
+
+        .documents-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .document-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .document-item:hover {
+            background: #edf2ff;
+            transform: translateX(3px);
+        }
+
+        .document-item i {
+            color: var(--danger);
+            font-size: 20px;
+            margin-right: 15px;
+        }
+
+        .doc-name {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .overview-stats {
+                flex-direction: column;
+            }
+            
+            .verification-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .back-btn {
+                margin-right: 0;
+            }
+            
+            .milestone-item {
+                flex-direction: column;
+            }
+            
+            .milestone-percentage {
+                align-self: flex-end;
+                margin-top: 10px;
+            }
+            
+            .milestone-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+  
+.sidebar {
+    width: 280px;
+    background: linear-gradient(to bottom, var(--primary), var(--primary-dark));
+    color: var(--white);
+    height: 100vh;
+    padding: 0;
+    position: fixed;
+    box-shadow: var(--shadow);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+}
+
+.logo-container {
+    padding: 25px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--white);
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 20px 15px;
+    flex: 1;
+}
+
+.sidebar ul li {
+    margin: 8px 0;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.sidebar ul li:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.sidebar ul li a.active {
+    background: rgba(59, 130, 246, 0.2);
+}
+
+.sidebar ul li a i {
+    margin-right: 12px;
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+}
+
+.sidebar ul li a:hover {
+    background: rgba(59, 130, 246, 0.15);
+}
+
+.sidebar-footer {
+    padding: 15px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+
+@media (max-width: 992px) {
+    .sidebar {
+        width: 80px;
+        padding: 20px 0;
+    }
+    
+    .logo {
+        font-size: 16px;
+    }
+    
+    .logo-container {
+        padding: 20px 10px;
+    }
+    
+    .sidebar ul li a span {
+        display: none;
+    }
+    
+    .sidebar ul li a i {
+        margin-right: 0;
+        font-size: 20px;
+    }
+    
+    .sidebar-footer {
+        display: none;
+    }
+    
+    .main-content {
+        margin-left: 80px;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: 280px;
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+}
+
+.strategy-section {
+    background: var(--white);
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border-left: 4px solid var(--accent);
+}
+
+.strategy-section:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.strategy-section h3 {
+    font-size: 20px;
+    color: var(--primary);
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--gray-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.strategy-section h3::before {
+    content: '📋';
+    font-size: 24px;
+}
+
+.strategy-box {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.strategy-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+}
+
+.strategy-box p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text);
+    margin: 0;
+    font-style: normal;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.strategy-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.strategy-actions .btn-primary {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: var(--white);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+}
+
+
+
+.strategy-actions .btn-secondary {
+    background: var(--white);
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.strategy-actions .btn-secondary:hover {
+    background: rgba(59, 130, 246, 0.1);
+    transform: translateY(-2px);
+}
+
+
+.strategy-section > p {
+    font-style: italic;
+    color: var(--text-light);
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 10px;
+    border: 2px dashed #cbd5e0;
+}
+
+.verification-result {
+    margin-top: 20px;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.verification-success {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+    border-left: 4px solid var(--success);
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.verification-success h4 {
+    color: var(--success);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.verification-error {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+    border-left: 4px solid var(--danger);
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.verification-error h4 {
+    color: var(--danger);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+@media (max-width: 768px) {
+    .strategy-section {
+        padding: 20px;
+        margin-left: 0;
+    }
+    
+    .strategy-box {
+        padding: 20px;
+    }
+    
+    .strategy-actions {
+        flex-direction: column;
+    }
+    
+    .strategy-actions .btn-primary,
+    .strategy-actions .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .verification-success,
+    .verification-error,
+    .suggestions {
+        padding: 15px;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.btn-primary.loading,
+.btn-secondary.loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary.loading::after,
+.btn-secondary.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    to {
+        left: 100%;
+    }
+}
+
+.verification-success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 15px;
+    color: #155724;
+}
+
+.verification-error {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 15px;
+    color: #721c24;
+}
+
+.verification-success h4,
+.verification-error h4 {
+    margin-top: 0;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.verification-success h5 {
+    color: #0c5460;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-size: 1em;
+}
+
+.verification-success ul {
+    margin: 8px 0 15px 20px;
+    padding: 0;
+}
+
+.verification-success li {
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
+
+.verification-success p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.verification-loading {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 15px;
+    text-align: center;
+    color: #6c757d;
+}
+
+.verification-success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 15px;
+    color: #155724;
+}
+
+.verification-error {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 15px;
+    color: #721c24;
+}
+
+.verification-success h4,
+.verification-error h4,
+.verification-loading h4 {
+    margin-top: 0;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.verification-success h5 {
+    color: #0c5460;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-size: 1em;
+}
+
+.verification-success ul {
+    margin: 8px 0 15px 20px;
+    padding: 0;
+}
+
+.verification-success li {
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
+
+.verification-actions {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #c3e6cb;
+}
+
+.verification-actions button {
+    margin-right: 10px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+    opacity: 0.9;
+}
+
+/* History Styling */
+.verification-history {
+    background-color: #e2e3e5;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.history-item {
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+.history-item.current {
+    border-color: #28a745;
+    background-color: #f8fff9;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.badge {
+    background-color: #28a745;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.verification-info {
+    background-color: #e7f1ff;
+    border: 1px solid #b8daff;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 15px;
+    color: #004085;
+}
+    </style>
+</head>
+<body>
+     <div class="sidebar">
+        <div class="logo-container">
+            <h2 class="logo">Akaash Pandya</h2>
+        </div>
+        <ul>
+            <li><a href="/dashboard" class="active"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+            <li><a href="/documents"><i class="fas fa-file-alt"></i> <span>Documents</span></a></li>
+            <li><a href="/hired-lawyers"><i class="fas fa-user-tie"></i> <span>My Lawyers</span></a></li>
+            <li><a href="/lawyers"><i class="fas fa-user-tie"></i> <span>Find Lawyers</span></a></li>
+            <li><a href="/chat-interface"><i class="fas fa-comments"></i> <span>Messages</span></a></li>
+            <li><a href="/legal-aid"><i class="fas fa-hands-helping"></i> <span>Legal Help</span></a></li>
+            <li><a href="/upload-case-file" class="btn btn-primary"><i class="fas fa-upload"></i> Upload Case File</a></li>
+
+        </ul>
+        <div class="sidebar-footer">
+            <p>&copy; 2025 Soven Legal</p>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <header>
+            <button class="back-btn" onclick="window.history.back()">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <h1>Case Details</h1>
+        </header>
+
+        <div class="case-details-container">
+            <!-- Case Overview -->
+            <section class="case-overview">
+                <h2>{{ hired_lawyer.case_title }}</h2>
+                <div class="overview-stats">
+                    <div class="stat">
+                        <span class="stat-value">{{ hired_lawyer.progress }}%</span>
+                        <span class="stat-label">Overall Progress</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">{{ milestones|length }}</span>
+                        <span class="stat-label">Total Milestones</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">{{ completed_milestones }}</span>
+                        <span class="stat-label">Completed</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Progress Timeline -->
+            <section class="milestones-section">
+                <h3>Case Milestones</h3>
+                <div class="milestones-timeline">
+                    {% for milestone in milestones %}
+                    <div class="milestone-item status-{{ milestone.status }}">
+                        <div class="milestone-icon">
+                            {% if milestone.status == 'completed' %}
+                            <i class="fas fa-check-circle"></i>
+                            {% elif milestone.status == 'in_progress' %}
+                            <i class="fas fa-spinner"></i>
+                            {% else %}
+                            <i class="fas fa-circle"></i>
+                            {% endif %}
+                        </div>
+                        <div class="milestone-content">
+                            <h4>{{ milestone.milestone_name }}</h4>
+                            <p>{{ milestone.description }}</p>
+                            <div class="milestone-meta">
+                                <span>Due: {{ milestone.due_date.strftime('%b %d, %Y') }}</span>
+                                {% if milestone.lawyer_notes %}
+                                <span class="notes">Notes: {{ milestone.lawyer_notes }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="milestone-percentage">
+                            {{ milestone.percentage_value }}%
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Strategy Section -->
+<section class="strategy-section">
+    <h3>Case Strategy</h3>
+    {% if hired_lawyer.strategy %}
+        <div class="strategy-box">
+            <p>{{ hired_lawyer.strategy }}</p>
+        </div>
+        <div class="strategy-actions">
+            <button class="btn-primary" onclick="verifyStrategy()">
+                <i class="fas fa-shield-alt"></i> Verify Strategy with AI
+            </button>
+           
+        </div>
+        <div class="verification-result" id="verificationResult"></div>
+    {% else %}
+        <p><em>No strategy has been added by the lawyer yet.</em></p>
+    {% endif %}
+</section>
+
+
+           
+        </div>
+    </div>
+
+    <script>
+        function verifyCaseProgress() {
+            fetch(`/api/verify-case-progress/{{ hired_lawyer._id }}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultDiv = document.getElementById('verificationResult');
+                    if (data.success) {
+                        resultDiv.innerHTML = `
+    <div class="verification-success">
+        <h4>✅ Strategy Verification Complete</h4>
+        <p>AI Analysis: {data?.ai_feedback?.analysis || "No analysis available"}</p>
+        ${deadlinesHtml}
+    </div>
+`;
+
+                    } else {
+                        resultDiv.innerHTML = `
+                            <div class="verification-error">
+                                <h4>❌ Verification Failed</h4>
+                                <p>${data.message}</p>
+                            </div>
+                        `;
+                    }
+                });
+        }
+
+        function verifyDocument(docId) {
+            fetch(`/api/verify-document/${docId}?case_id={{ hired_lawyer._id }}`)
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                });
+        }
+
+        
+        function verifyStrategy(forceRefresh = false) {
+   const resultDiv = document.getElementById('verificationResult');
+   
+   // Show loading
+   resultDiv.innerHTML = `
+       <div class="verification-loading">
+           <h4><i class="fas fa-cog fa-spin"></i> ${forceRefresh ? 'Getting Fresh Analysis...' : 'Analyzing Strategy...'}</h4>
+           <p>Please wait while AI ${forceRefresh ? 'generates a new' : 'verifies your case'} strategy analysis.</p>
+       </div>
+   `;
+
+   const url = forceRefresh 
+       ? `/api/verify-strategy/{{ hired_lawyer._id }}?force=true`
+       : `/api/verify-strategy/{{ hired_lawyer._id }}`;
+
+   fetch(url)
+       .then(response => response.json())
+       .then(data => {
+           if (data.success) {
+               const analysis = data.analysis || "No analysis available";
+               const fromCache = data.from_cache || false;
+               const verifiedAt = data.verified_at || "Just now";
+               
+               // Cache indicator with better styling and logic
+               const cacheIndicator = fromCache ? 
+                   `<div class="cache-indicator cache-cached">
+                       <i class="fas fa-database"></i> Using cached result from ${verifiedAt}
+                   </div>` :
+                   `<div class="cache-indicator cache-fresh">
+                       <i class="fas fa-sparkles"></i> Fresh analysis generated at ${verifiedAt}
+                   </div>`;
+               
+               let deadlinesHtml = "";
+               const deadlines = data.deadlines || [];
+               if (deadlines.length > 0) {
+                   deadlinesHtml = `
+                       <div style="margin-top: 1.5rem;">
+                           <h5><i class="fas fa-calendar-alt"></i> Suggested Deadlines</h5>
+                           <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                               ${deadlines.map(d => `<li><strong>${d.task}</strong> - Due: ${d.due_date}</li>`).join("")}
+                           </ul>
+                       </div>
+                   `;
+               }
+
+               let detailsHtml = "";
+               const strengths = data.strengths || [];
+               const weaknesses = data.weaknesses || [];
+               const improvements = data.improvements || [];
+               
+               if (strengths.length > 0) {
+                   detailsHtml += `
+                       <div style="margin-top: 1.5rem;">
+                           <h5><i class="fas fa-thumbs-up"></i> Strengths</h5>
+                           <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                               ${strengths.map(s => `<li>${s}</li>`).join("")}
+                           </ul>
+                       </div>
+                   `;
+               }
+               
+               if (weaknesses.length > 0) {
+                   detailsHtml += `
+                       <div style="margin-top: 1.5rem;">
+                           <h5><i class="fas fa-exclamation-triangle"></i> Areas for Improvement</h5>
+                           <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                               ${weaknesses.map(w => `<li>${w}</li>`).join("")}
+                           </ul>
+                       </div>
+                   `;
+               }
+               
+               if (improvements.length > 0) {
+                   detailsHtml += `
+                       <div style="margin-top: 1.5rem;">
+                           <h5><i class="fas fa-lightbulb"></i> Suggested Improvements</h5>
+                           <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                               ${improvements.map(i => `<li>${i}</li>`).join("")}
+                           </ul>
+                       </div>
+                   `;
+               }
+
+               resultDiv.innerHTML = `
+                   <div class="verification-success">
+                       <h4><i class="fas fa-check-circle"></i> Strategy Verification Complete</h4>
+                       ${cacheIndicator}
+                       <div style="margin-top: 1rem;">
+                           <p><strong>AI Analysis:</strong> ${analysis}</p>
+                       </div>
+                       ${detailsHtml}
+                       ${deadlinesHtml}
+                       <div class="verification-actions" style="margin-top: 1.5rem;">
+                           <button class="btn-secondary" onclick="viewVerificationHistory()">
+                               <i class="fas fa-history"></i> View History
+                           </button>
+                           ${fromCache ? 
+                               `<button class="btn-primary" onclick="verifyStrategy(true)">
+                                   <i class="fas fa-sync-alt"></i> Get Fresh Analysis
+                               </button>` : 
+                               `<button class="btn-secondary" onclick="verifyStrategy(true)" style="opacity: 0.7;">
+                                   <i class="fas fa-sync-alt"></i> Force Refresh
+                               </button>`
+                           }
+                       </div>
+                   </div>
+               `;
+           } else {
+               resultDiv.innerHTML = `
+                   <div class="verification-error">
+                       <h4><i class="fas fa-times-circle"></i> Strategy Verification Failed</h4>
+                       <p>${data.message}</p>
+                       <button class="btn-primary" onclick="verifyStrategy(${forceRefresh})" style="margin-top: 1rem;">
+                           <i class="fas fa-redo"></i> Try Again
+                       </button>
+                   </div>
+               `;
+           }
+       })
+       .catch(error => {
+           resultDiv.innerHTML = `
+               <div class="verification-error">
+                   <h4><i class="fas fa-exclamation-triangle"></i> Network Error</h4>
+                   <p>Failed to connect to server: ${error.message}</p>
+                   <button class="btn-primary" onclick="verifyStrategy(${forceRefresh})" style="margin-top: 1rem;">
+                       <i class="fas fa-redo"></i> Retry
+                   </button>
+               </div>
+           `;
+       });
+}
+
+function forceRefresh() {
+    const resultDiv = document.getElementById('verificationResult');
+    resultDiv.innerHTML = `
+        <div class="verification-loading">
+            <h4>🔄 Getting Fresh Analysis...</h4>
+        </div>
+    `;
+    
+    fetch(`/api/verify-strategy/{{ hired_lawyer.case_id }}`)
+        .then(response => response.json())
+        .then(data => {
+            // Reuse the same display logic
+            verifyStrategy();
+        });
+}
+
+function viewVerificationHistory() {
+    fetch(`/api/verification-history/{{ hired_lawyer._id }}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.verifications.length > 0) {
+                let historyHtml = `
+                    <div class="verification-history">
+                        <h4>📊 Verification History</h4>
+                        <p>Past ${data.verifications.length} verification(s):</p>
+                `;
+                
+                data.verifications.forEach((v, index) => {
+                    const isLatest = index === 0;
+                    historyHtml += `
+                        <div class="history-item ${isLatest ? 'current' : ''}">
+                            <div class="history-header">
+                                <strong>${v.verified_at}</strong>
+                                ${isLatest ? '<span class="badge">Latest</span>' : ''}
+                            </div>
+                            <p>${v.analysis_preview}</p>
+                            <small>Strengths: ${v.strengths?.length || 0}, Weaknesses: ${v.weaknesses?.length || 0}</small>
+                        </div>
+                    `;
+                });
+                
+                historyHtml += `</div>`;
+                
+                // Append to current results
+                document.getElementById('verificationResult').innerHTML += historyHtml;
+            } else {
+                document.getElementById('verificationResult').innerHTML += `
+                    <div class="verification-info">
+                        <p>📝 No previous verifications found for this case.</p>
+                    </div>
+                `;
+            }
+        })
+        .catch(error => {
+            console.error('History fetch error:', error);
+        });
+}
+document.addEventListener("DOMContentLoaded", () => {
+    fetch(`/api/latest-verification/{{ hired_lawyer._id }}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const resultDiv = document.getElementById('verificationResult');
+
+                let deadlinesHtml = "";
+                if (data.deadlines?.length > 0) {
+                    deadlinesHtml = `
+                        <div style="margin-top: 1.5rem;">
+                            <h5><i class="fas fa-calendar-alt"></i> Suggested Deadlines</h5>
+                            <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                                ${data.deadlines.map(d => `<li><strong>${d.task}</strong> - Due: ${d.due_date}</li>`).join("")}
+                            </ul>
+                        </div>
+                    `;
+                }
+
+                let detailsHtml = "";
+                if (data.strengths?.length > 0) {
+                    detailsHtml += `
+                        <div style="margin-top: 1.5rem;">
+                            <h5><i class="fas fa-thumbs-up"></i> Strengths</h5>
+                            <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                                ${data.strengths.map(s => `<li>${s}</li>`).join("")}
+                            </ul>
+                        </div>
+                    `;
+                }
+                if (data.weaknesses?.length > 0) {
+                    detailsHtml += `
+                        <div style="margin-top: 1.5rem;">
+                            <h5><i class="fas fa-exclamation-triangle"></i> Weaknesses</h5>
+                            <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                                ${data.weaknesses.map(w => `<li>${w}</li>`).join("")}
+                            </ul>
+                        </div>
+                    `;
+                }
+                if (data.improvements?.length > 0) {
+                    detailsHtml += `
+                        <div style="margin-top: 1.5rem;">
+                            <h5><i class="fas fa-lightbulb"></i> Improvements</h5>
+                            <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                                ${data.improvements.map(i => `<li>${i}</li>`).join("")}
+                            </ul>
+                        </div>
+                    `;
+                }
+
+                resultDiv.innerHTML = `
+                    <div class="verification-success">
+                        <h4><i class="fas fa-check-circle"></i> Last Strategy Verification</h4>
+                        <div class="cache-indicator cache-cached">
+                            <i class="fas fa-database"></i> Using cached result from ${data.verified_at}
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <p><strong>AI Analysis:</strong> ${data.analysis}</p>
+                        </div>
+                        ${detailsHtml}
+                        ${deadlinesHtml}
+                        <div class="verification-actions" style="margin-top: 1.5rem;">
+                            <button class="btn-secondary" onclick="viewVerificationHistory()">
+                                <i class="fas fa-history"></i> View History
+                            </button>
+                            <button class="btn-primary" onclick="verifyStrategy(true)">
+                                <i class="fas fa-sync-alt"></i> Get Fresh Analysis
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        })
+        .catch(err => console.error("Preload verification error:", err));
+});
+
+    </script>
+</body>
+</html>

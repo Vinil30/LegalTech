@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soven Legal - Lawyer Chats</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #1a365d;
+      --primary-dark: #153060;
+      --primary-light: #2d4e8f;
+      --accent: #3b82f6;
+      --accent-dark: #2563eb;
+      --accent-light: #93c5fd;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --light: #f8fafc;
+      --gray-light: #f1f5f9;
+      --gray: #cbd5e1;
+      --gray-dark: #64748b;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --white: #ffffff;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+      --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --sidebar-width: 280px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--light);
+      color: var(--text);
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Improved Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: linear-gradient(to bottom, var(--primary), var(--primary-dark));
+      color: var(--white);
+      height: 100vh;
+      position: fixed;
+      box-shadow: var(--shadow);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+    }
+
+    .logo-container {
+      padding: 25px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--white);
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 20px 15px;
+      flex: 1;
+    }
+
+    .sidebar ul li {
+      margin: 8px 0;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+    }
+
+    .sidebar ul li:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .sidebar ul li a {
+      text-decoration: none;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      font-size: 16px;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+    }
+
+    .sidebar ul li a.active {
+      background: rgba(59, 130, 246, 0.25);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar ul li a i {
+      margin-right: 12px;
+      font-size: 18px;
+      width: 24px;
+      text-align: center;
+    }
+
+    .sidebar ul li a:hover {
+      background: rgba(59, 130, 246, 0.15);
+    }
+
+    .sidebar-footer {
+      padding: 15px 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 30px;
+      margin-left: var(--sidebar-width);
+      transition: var(--transition);
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--gray);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--primary);
+      padding: 8px;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+
+    .menu-toggle:hover {
+      background: var(--gray-light);
+    }
+
+    header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
+      background: var(--white);
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .avatar {
+      background: linear-gradient(to bottom right, var(--accent), var(--accent-dark));
+      color: var(--white);
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Chat Container */
+    .chat-container {
+      display: flex;
+      height: calc(100vh - 150px);
+      background-color: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .chat-sidebar {
+      width: 350px;
+      background-color: var(--white);
+      border-right: 1px solid var(--gray-light);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--gray-light);
+      background-color: var(--light);
+    }
+
+    .sidebar-header h2 {
+      margin: 0;
+      font-size: 20px;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .chat-list {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .chat-item {
+      display: flex;
+      padding: 16px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--gray-light);
+      align-items: center;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .chat-item:hover {
+      background-color: var(--gray-light);
+    }
+
+    .chat-item.active-chat {
+      background-color: var(--accent-light);
+      border-left: 4px solid var(--accent);
+    }
+
+    .chat-avatar, .lawyer-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(to bottom right, var(--primary-light), var(--primary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 16px;
+      font-size: 20px;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+
+    .chat-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .chat-info h4 {
+      margin: 0 0 6px 0;
+      font-size: 16px;
+      color: var(--primary);
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .last-message {
+      margin: 0;
+      color: var(--text-light);
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chat-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      margin-left: 10px;
+    }
+
+    .time {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-bottom: 6px;
+    }
+
+    .unread-count {
+      background-color: var(--accent);
+      color: var(--white);
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .chat-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .chat-header {
+      padding: 16px 24px;
+      background-color: var(--light);
+      border-bottom: 1px solid var(--gray-light);
+      display: flex;
+      align-items: center;
+    }
+
+    .lawyer-info {
+      display: flex;
+      align-items: center;
+      flex: 1;
+    }
+
+    .back-button {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 18px;
+      margin-right: 16px;
+      cursor: pointer;
+      color: var(--primary);
+      padding: 8px;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+
+    .back-button:hover {
+      background: var(--gray-light);
+    }
+
+    .empty-chat-message {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      color: var(--text-light);
+      flex-direction: column;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .empty-chat-message i {
+      font-size: 48px;
+      margin-bottom: 16px;
+      color: var(--gray);
+    }
+
+    .empty-chat-message p {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .empty-chat-message span {
+      font-size: 14px;
+      color: var(--text-light);
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+      background-color: #f0f4f8;
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23cbd5e1' fill-opacity='0.3' fill-rule='evenodd'/%3E%3C/svg%3E");
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message {
+      max-width: 70%;
+      margin-bottom: 16px;
+      padding: 12px 16px;
+      border-radius: 18px;
+      position: relative;
+      animation: fadeIn 0.3s ease;
+      line-height: 1.4;
+    }
+
+    .message.sent {
+      background: linear-gradient(to bottom right, var(--accent), var(--accent-dark));
+      color: var(--white);
+      margin-left: auto;
+      border-bottom-right-radius: 4px;
+      box-shadow: var(--shadow);
+    }
+
+    .message.received {
+      background-color: var(--white);
+      color: var(--text);
+      border-bottom-left-radius: 4px;
+      box-shadow: var(--shadow);
+    }
+
+    .message .time {
+      font-size: 11px;
+      margin-top: 4px;
+      opacity: 0.8;
+    }
+
+    .message.received .time {
+      color: var(--text-light);
+    }
+
+    .chat-input-container {
+      padding: 20px;
+      background-color: var(--light);
+      border-top: 1px solid var(--gray-light);
+    }
+
+    .input-container {
+      display: flex;
+      align-items: center;
+      background: var(--white);
+      border-radius: 24px;
+      padding: 4px;
+      box-shadow: var(--shadow);
+    }
+
+    #message-input {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      background: transparent;
+      border-radius: 24px;
+    }
+
+    #send-btn {
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin-left: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #send-btn:hover {
+      background: var(--accent-dark);
+      transform: scale(1.05);
+    }
+
+    .no-chats {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--text-light);
+    }
+
+    .no-chats i {
+      font-size: 48px;
+      margin-bottom: 16px;
+      color: var(--gray);
+      opacity: 0.5;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .chat-sidebar {
+        width: 300px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .sidebar {
+        width: 80px;
+      }
+      
+      .logo {
+        font-size: 16px;
+      }
+      
+      .logo-container {
+        padding: 20px 10px;
+      }
+      
+      .sidebar ul li a span {
+        display: none;
+      }
+      
+      .sidebar ul li a i {
+        margin-right: 0;
+        font-size: 20px;
+      }
+      
+      .sidebar-footer {
+        display: none;
+      }
+      
+      .main-content {
+        margin-left: 80px;
+        padding: 20px;
+      }
+      
+      .chat-container {
+        height: calc(100vh - 130px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        width: 280px;
+      }
+      
+      .sidebar.active {
+        transform: translateX(0);
+      }
+      
+      .main-content {
+        margin-left: 0;
+        padding: 15px;
+      }
+      
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+      
+      .header-left {
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      .menu-toggle {
+        display: block;
+      }
+      
+      .user-info {
+        align-self: flex-end;
+      }
+      
+      .chat-sidebar {
+        width: 100%;
+      }
+      
+      .chat-main {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        background: var(--white);
+      }
+      
+      .chat-main.active {
+        display: flex;
+      }
+      
+      .back-button {
+        display: block;
+      }
+
+      .message {
+        max-width: 85%;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+   
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--gray-light);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--gray);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--gray-dark);
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar Navigation -->
+  <div class="sidebar">
+    <div class="logo-container">
+      <div class="logo">Akaash Pandya</div>
+    </div>
+    <ul>
+      <li><a href="/lawyer-dashboard"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+      <li><a href="/lawyer-cases"><i class="fas fa-file-alt"></i> <span>My Cases</span></a></li>
+      <li><a href="/lawyer/chat-interface" class="active"><i class="fas fa-comments"></i> <span>Client Messages</span></a></li>
+    </ul>
+    <div class="sidebar-footer">
+      &copy; 2025 Soven Legal
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <header>
+      <div class="header-left">
+        <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+        <h1>Client Messages</h1>
+      </div>
+      <div class="user-info">
+        <div class="avatar">LW</div>
+        <span>Lawyer Wilson</span>
+      </div>
+    </header>
+
+    <div class="chat-container">
+      <!-- Sidebar with chat list -->
+      <div class="chat-sidebar">
+        <div class="sidebar-header">
+          <h2>Clients</h2>
+        </div>
+        <div class="chat-list" id="chat-list">
+          <div class="no-chats">
+            <i class="fas fa-comments"></i>
+            <p>No active chats</p>
+            <span>When clients message you, they'll appear here</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main chat area -->
+      <div class="chat-main">
+        <div class="chat-header" id="chat-header">
+          <div class="empty-chat-message">
+            <i class="fas fa-comment-dots"></i>
+            <p>Select a conversation</p>
+            <span>Choose a client from the list to view your messages</span>
+          </div>
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+        </div>
+
+        <div class="chat-input-container" id="chat-input-container" style="display: none;">
+          <div class="input-container">
+            <input type="text" id="message-input" placeholder="Type a message...">
+            <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+let currentChatId = null;
+let currentUserId = null;
+let currentUserName = null;
+
+document.querySelector('.menu-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+});
+
+async function loadChats() {
+  try {
+    const response = await fetch('/api/lawyer/chats');
+    const data = await response.json();
+    const chatList = document.getElementById('chat-list');
+    chatList.innerHTML = '';
+
+    if (!data.chats || data.chats.length === 0) {
+      chatList.innerHTML = `
+        <div class="no-chats">
+          <i class="fas fa-comments"></i>
+          <p>No active chats</p>
+          <span>When clients message you, they'll appear here</span>
+        </div>
+      `;
+      return;
+    }
+
+    data.chats.forEach(chat => {
+      const chatElement = document.createElement('div');
+      chatElement.className = 'chat-item';
+      chatElement.dataset.chatId = chat.chat_id;
+      chatElement.dataset.userId = chat.user_id;
+
+      const lastMessageTime = new Date(chat.last_message_time).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      chatElement.innerHTML = `
+        <div class="chat-avatar">${chat.user_name.split(' ').map(n => n[0]).join('')}</div>
+        <div class="chat-info">
+          <h4>${chat.user_name}</h4>
+          <p class="last-message">${chat.last_message}</p>
+        </div>
+        <div class="chat-meta">
+          <span class="time">${lastMessageTime}</span>
+          ${chat.unread_count > 0 ? `<span class="unread-count">${chat.unread_count}</span>` : ''}
+        </div>
+      `;
+
+      chatElement.addEventListener('click', () => {
+        document.querySelectorAll('.chat-item').forEach(item => {
+          item.classList.remove('active-chat');
+        });
+
+        chatElement.classList.add('active-chat');
+        openChat(chat.chat_id, chat.user_id, chat.user_name);
+
+        if (window.innerWidth <= 768) {
+          document.querySelector('.chat-main').classList.add('active');
+        }
+      });
+
+      chatList.appendChild(chatElement);
+    });
+  } catch (error) {
+    console.error('Error loading chats:', error);
+  }
+}
+
+async function openChat(chatId, userId, userName) {
+  currentChatId = chatId;
+  currentUserId = userId;
+  currentUserName = userName;
+
+  document.getElementById('chat-header').innerHTML = `
+    <div class="lawyer-info">
+      <button class="back-button" id="back-button"><i class="fas fa-arrow-left"></i></button>
+      <div class="lawyer-avatar">${userName.split(' ').map(n => n[0]).join('')}</div>
+      <div><h3>${userName}</h3></div>
+    </div>
+  `;
+
+  document.getElementById('back-button').addEventListener('click', function() {
+    document.querySelector('.chat-main').classList.remove('active');
+    currentChatId = null;
+    currentUserId = null;
+    currentUserName = null;
+    document.getElementById('chat-input-container').style.display = 'none';
+
+    document.getElementById('chat-header').innerHTML = `
+      <div class="empty-chat-message">
+        <i class="fas fa-comment-dots"></i>
+        <p>Select a conversation</p>
+        <span>Choose a client from the list to view your messages</span>
+      </div>
+    `;
+
+    document.getElementById('chat-messages').innerHTML = '';
+    document.querySelectorAll('.chat-item').forEach(item => {
+      item.classList.remove('active-chat');
+    });
+  });
+
+  document.getElementById('chat-input-container').style.display = 'block';
+
+  await loadMessages(chatId);
+  await markMessagesAsRead(chatId);
+  loadChats();
+}
+
+async function loadMessages(chatId) {
+  try {
+    const response = await fetch(`/lawyer/chat/${chatId}`);
+    const chat = await response.json();
+    const messagesDiv = document.getElementById('chat-messages');
+    messagesDiv.innerHTML = '';
+
+    if (!chat.messages || chat.messages.length === 0) {
+      messagesDiv.innerHTML = `
+        <div style="text-align: center; padding: 40px; color: var(--text-light);">
+          <i class="fas fa-comment-slash" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+          <p>No messages yet</p>
+          <span>Start a conversation with ${currentUserName}</span>
+        </div>
+      `;
+      return;
+    }
+
+    chat.messages.forEach(msg => {
+      const div = document.createElement('div');
+      div.className = `message ${msg.sender === 'lawyer' ? 'sent' : 'received'}`;
+      div.innerHTML = `
+        <p>${msg.message}</p>
+        <div class="message-meta">
+          <span class="time">${new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+        </div>
+      `;
+      messagesDiv.appendChild(div);
+    });
+
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  } catch (error) {
+    console.error('Error loading messages:', error);
+  }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('message-input');
+  const text = input.value.trim();
+  if (!text || !currentChatId) return;
+
+  try {
+    await fetch(`/lawyer/chat/${currentChatId}/send`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text })
+    });
+
+    input.value = '';
+    await loadMessages(currentChatId);
+    await loadChats();
+  } catch (error) {
+    console.error('Error sending message:', error);
+  }
+}
+
+async function markMessagesAsRead(chatId) {
+  try {
+    await fetch(`/lawyer/chat/${chatId}/read`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    });
+  } catch (error) {
+    console.error('Error marking messages as read:', error);
+  }
+}
+
+document.getElementById('send-btn').addEventListener('click', sendMessage);
+document.getElementById('message-input').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') sendMessage();
+});
+
+
+loadChats();
+
+setInterval(() => {
+  if (currentChatId) {
+    loadMessages(currentChatId);
+  }
+  loadChats();
+}, 5000); 
+</script>
+
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Hired Lawyers - Akaash Pandya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+    :root {
+        --primary: #2f4050;
+        --primary-dark: #283848;
+        --accent: #3b82f6;
+        --accent-dark: #2563eb;
+        --danger: #ef4444;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --light: #f9fafc;
+        --gray-light: #eaeaea;
+        --gray: #d1d5db;
+        --text: #333;
+        --text-light: #6b7280;
+        --white: #ffffff;
+        --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.12);
+        --transition: all 0.3s ease;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--light);
+        color: var(--text);
+        line-height: 1.6;
+    }
+
+    /* Main Content */
+    .main-content {
+        padding: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--gray-light);
+    }
+
+    header h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--primary);
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 500;
+        background: var(--white);
+        padding: 10px 15px;
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+    }
+
+    .avatar {
+        background: var(--accent);
+        color: var(--white);
+        border-radius: 50%;
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Section Styling */
+    .hired-lawyers-section {
+        background: var(--white);
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+    }
+
+    .hired-lawyers-section:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-hover);
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--gray-light);
+    }
+
+    .section-header h2 {
+        font-size: 22px;
+        color: var(--primary);
+        margin: 0;
+    }
+
+    /* Buttons */
+    .btn-primary, .btn-secondary, .btn-warning {
+        padding: 10px 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+    }
+
+    .btn-primary {
+        background: var(--accent);
+        color: var(--white);
+        box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-primary:hover {
+        background: var(--accent-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(59, 130, 246, 0.4);
+    }
+
+    .btn-secondary {
+        background: var(--light);
+        color: var(--text);
+        border: 1px solid var(--gray);
+    }
+
+    .btn-secondary:hover {
+        background: #edf2ff;
+        transform: translateY(-2px);
+    }
+
+    .btn-warning {
+        background: var(--warning);
+        color: var(--white);
+        box-shadow: 0 4px 6px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-warning:hover {
+        background: #e69008;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(245, 158, 11, 0.4);
+    }
+
+    /* Lawyers Grid */
+    .lawyers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    /* Lawyer Card */
+    .lawyer-card {
+        background: var(--white);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        border: 1px solid var(--gray-light);
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .lawyer-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-hover);
+    }
+
+    .lawyer-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .lawyer-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: var(--accent);
+        color: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+    }
+
+    .lawyer-info h3 {
+        font-size: 18px;
+        color: var(--primary);
+        margin-bottom: 5px;
+    }
+
+    .specialization {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .spec-tag {
+        background: var(--light);
+        color: var(--accent);
+        padding: 4px 8px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    /* Progress Section */
+    .progress-section {
+        background: var(--light);
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    .progress-bar {
+        height: 8px;
+        background: var(--gray-light);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 8px;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: var(--success);
+        border-radius: 4px;
+        transition: width 0.5s ease;
+    }
+
+    .progress-text {
+        font-size: 14px;
+        color: var(--text-light);
+        font-weight: 500;
+    }
+
+    /* Case Details */
+    .case-details p {
+        margin-bottom: 8px;
+        font-size: 14px;
+        display: flex;
+        gap: 5px;
+    }
+
+    .case-details strong {
+        color: var(--primary);
+        min-width: 60px;
+    }
+
+    .status-active {
+        color: var(--success);
+        font-weight: 500;
+    }
+
+    .status-pending {
+        color: var(--warning);
+        font-weight: 500;
+    }
+
+    .status-completed {
+        color: var(--success);
+        font-weight: 500;
+    }
+
+    .status-cancelled {
+        color: var(--danger);
+        font-weight: 500;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: auto;
+        flex-wrap: wrap;
+    }
+
+    .action-buttons button {
+        flex: 1;
+        min-width: 120px;
+    }
+
+    /* Empty State */
+    .empty-state {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 40px 20px;
+        background: var(--light);
+        border-radius: 12px;
+        border: 2px dashed var(--gray);
+    }
+
+    .empty-state i {
+        font-size: 48px;
+        color: var(--text-light);
+        margin-bottom: 15px;
+    }
+
+    .empty-state h3 {
+        font-size: 20px;
+        color: var(--primary);
+        margin-bottom: 10px;
+    }
+
+    .empty-state p {
+        color: var(--text-light);
+        margin-bottom: 20px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+        .lawyers-grid {
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-content {
+            padding: 20px;
+        }
+        
+        header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .user-info {
+            align-self: flex-end;
+        }
+        
+        .section-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .action-buttons {
+            flex-direction: column;
+        }
+        
+        .action-buttons button {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .lawyers-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .lawyer-header {
+            flex-direction: column;
+            text-align: center;
+            gap: 10px;
+        }
+        
+        .specialization {
+            justify-content: center;
+        }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    </style>
+</head>
+<body>
+    
+    <div class="main-content">
+        <header>
+            <h1>My Hired Lawyers</h1>
+            <div class="user-info">
+                <div class="avatar">{{ user.name[0]|upper }}</div>
+                Welcome, {{ user.name }}
+            </div>
+        </header>
+
+        <section class="hired-lawyers-section">
+            <div class="section-header">
+                <h2>Your Legal Team</h2>
+                <button class="btn-primary" onclick="hireNewLawyer()">
+                    <i class="fas fa-plus"></i> Hire New Lawyer
+                </button>
+            </div>
+
+            <div class="lawyers-grid" id="lawyersGrid">
+                {% if not hired_lawyers %}
+                <div class="empty-state">
+                    <i class="fas fa-user-tie"></i>
+                    <h3>No lawyers hired yet</h3>
+                    <p>Hire a lawyer to get started with your case</p>
+                    <button class="btn-primary" onclick="window.location.href='/lawyers'">
+                        Browse Lawyers
+                    </button>
+                </div>
+                {% endif %}
+                
+                {% for hired in hired_lawyers %}
+                <div class="lawyer-card" data-id="{{ hired._id }}">
+                    <div class="lawyer-header">
+                        <div class="lawyer-avatar">{{ hired.lawyer_info.name[0]|upper }}</div>
+                        <div class="lawyer-info">
+                            <h3>{{ hired.lawyer_info.name }}</h3>
+                            <p class="specialization">
+                                {% for spec in hired.lawyer_info.specialization %}
+                                <span class="spec-tag">{{ spec }}</span>
+                                {% endfor %}
+                            </p>
+                        </div>
+                    </div>
+                    
+                   <div class="progress-section">
+  <div class="progress-bar">
+    <div class="progress-fill" style="width: {{ hired.progress }}%"></div>
+  </div>
+  <span class="progress-text">{{ hired.progress }}% Complete</span>
+</div>
+
+                    
+                    <div class="case-details">
+                        <p><strong>Case:</strong> {{ hired.case_title }}</p>
+                        <p><strong>Hired:</strong> {{ hired.hired_date.strftime('%b %d, %Y') }}</p>
+                        <p><strong>Status:</strong> <span class="status-{{ hired.status }}">{{ hired.status|title }}</span></p>
+                        <p><strong>Fee:</strong> ₹{{ hired.agreed_fee }}</p>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn-secondary" onclick="viewDetails('{{ hired._id }}')">
+                            <i class="fas fa-eye"></i> View Details
+                        </button>
+                        <button class="btn-primary" onclick="messageLawyer('{{ hired.lawyer_id }}')">
+                            <i class="fas fa-message"></i> Message
+                        </button>
+                        <button class="btn-warning" onclick="verifyProgress('{{ hired._id }}')">
+                            <i class="fas fa-shield-alt"></i> Verify
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function viewDetails(hiredLawyerId) {
+            window.location.href = `/hired-lawyer-details/${hiredLawyerId}`;
+        }
+        
+        function messageLawyer(lawyerId) {
+            window.location.href = `/chatwithlawyer/${lawyerId}`;
+        }
+        
+        function hireNewLawyer() {
+            window.location.href = '/lawyers';
+        }
+        
+        function verifyProgress(hiredLawyerId) {
+            alert('Verification request sent for case: ' + hiredLawyerId);
+        }
+    </script>
+</body>
+</html>
