@@ -1,0 +1,218 @@
+/* General Layout */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    background: #f9fafc;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background: #2f4050;
+    color: white;
+    height: 100vh;
+    padding: 20px;
+}
+.sidebar h2 {
+    margin: 0 0 30px 0;
+}
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+.sidebar ul li {
+    margin: 20px 0;
+}
+.sidebar ul li a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+.sidebar ul li a i {
+    margin-right: 10px;
+}
+.sidebar ul li a.active {
+    font-weight: bold;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.user-info {
+    display: flex;
+    align-items: center;
+}
+.avatar {
+    background: #3b82f6;
+    color: white;
+    border-radius: 50%;
+    padding: 10px;
+    margin-left: 10px;
+}
+
+/* Upload Section */
+.upload-section {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.upload-box {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.upload-box input[type="text"] {
+    padding: 8px;
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+.upload-box input[type="file"] {
+    flex: 1;
+}
+.upload-box button {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Uploaded Docs */
+.uploaded-docs {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+.uploaded-docs ul {
+    list-style: none;
+    padding: 0;
+}
+.uploaded-docs li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+.doc-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.doc-actions button {
+    margin-left: 8px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.scan-btn {
+    background: #10b981;
+    color: white;
+}
+.delete-btn {
+    background: #ef4444;
+    color: black;
+}
+/* Uploaded Docs - Improved Layout */
+.uploaded-docs li {
+    display: grid;
+    grid-template-columns: 1fr 2fr auto; /* name | status | actions */
+    align-items: center;
+    gap: 15px;
+    padding: 12px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.doc-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.doc-status {
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.4;
+}
+
+.doc-status strong {
+    color: #2563eb;
+}
+
+.doc-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.doc-actions button {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.scan-btn {
+    background: #10b981;
+    color: white;
+}
+.scan-btn:hover {
+    background: #059669;
+}
+
+.delete-btn {
+    background: #ef4444;
+    color: white;
+}
+.delete-btn:hover {
+    background: #dc2626;
+}
+.btn-info {
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-info:hover {
+    background-color: #138496 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.btn-info:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.doc-requirements {
+    position: relative;
+    transition: box-shadow 0.3s ease;
+}
+
+.doc-requirements:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.btn-sm {
+    font-size: 12px;
+    padding: 5px 10px;
+}

@@ -1,0 +1,105 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #ece5dd;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat-container {
+  width: 400px;
+  height: 90vh;
+  background: #fff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.chat-header {
+  background: #075E54;
+  color: white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.lawyer-info {
+  display: flex;
+  align-items: center;
+}
+
+.lawyer-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 15px;
+  background: #ece5dd;
+  overflow-y: auto;
+}
+
+.message {
+  max-width: 70%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  position: relative;
+  word-wrap: break-word;
+}
+
+.message.sent {
+  background: #dcf8c6;
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+.message.received {
+  background: #fff;
+  border: 1px solid #ddd;
+  align-self: flex-start;
+  margin-right: auto;
+}
+
+.message .time {
+  display: block;
+  font-size: 0.7em;
+  color: #888;
+  margin-top: 4px;
+  text-align: right;
+}
+
+.chat-input {
+  display: flex;
+  padding: 10px;
+  background: #f0f0f0;
+  border-top: 1px solid #ddd;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+}
+
+.chat-input button {
+  margin-left: 10px;
+  background: #075E54;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  font-weight: bold;
+}
